@@ -17,12 +17,11 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
-import org.openhab.core.automation.Trigger;
-import org.openhab.core.automation.handler.BaseTriggerModuleHandler;
 import org.openhab.core.events.Event;
 import org.openhab.core.events.EventFilter;
 import org.openhab.core.events.EventSubscriber;
 import org.openhab.core.items.events.ItemStateChangedEvent;
+import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,14 +29,10 @@ import org.slf4j.LoggerFactory;
  * @author lvcv4y initial contribution
  */
 @NonNullByDefault
-public class AnyItemChangeHandler extends BaseTriggerModuleHandler implements EventSubscriber {
+@Component(immediate = true, service = EventSubscriber.class)
+public class AnyItemChangeHandler implements EventSubscriber {
 
     private static final Logger logger = LoggerFactory.getLogger(AnyItemChangeHandler.class);
-
-    public AnyItemChangeHandler(Trigger module) {
-        super(module);
-        logger.info("Creating item change handler");
-    }
 
     @Override
     public Set<String> getSubscribedEventTypes() {
@@ -55,6 +50,7 @@ public class AnyItemChangeHandler extends BaseTriggerModuleHandler implements Ev
             return;
 
         ItemStateChangedEvent iscEvent = (ItemStateChangedEvent) event;
+
         String itemName = iscEvent.getItemName();
         Object newState = iscEvent.getItemState();
 
