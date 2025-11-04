@@ -432,6 +432,7 @@
     <module>org.openhab.voice.voicerss</module>
     <module>org.openhab.voice.voskstt</module>
     <module>org.openhab.voice.watsonstt</module>
+    <module>org.openhab.automation.monpetitbundle</module>
   </modules>
 
   <properties>
