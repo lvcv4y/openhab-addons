@@ -25,4 +25,6 @@ public class MesPetitesConstants {
     public static final ThingTypeUID THING_TYPE_DEVICE = new ThingTypeUID(BINDING_ID, "device");
 
     public static final String CHANNEL_COUNTER = "counter";
+
+    public static final String ANY_ITEM_CHANGE_UID = "org.openhab.automation.monpetitmodule.anyitemchange";
 }
