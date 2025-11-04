@@ -21,7 +21,11 @@ import org.openhab.core.events.Event;
 import org.openhab.core.events.EventFilter;
 import org.openhab.core.events.EventSubscriber;
 import org.openhab.core.items.events.ItemStateChangedEvent;
+import org.openhab.core.thing.Thing;
+import org.openhab.core.thing.link.ItemChannelLinkRegistry;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +35,13 @@ import org.slf4j.LoggerFactory;
 @NonNullByDefault
 @Component(immediate = true, service = EventSubscriber.class)
 public class AnyItemChangeHandler implements EventSubscriber {
+
+    private final ItemChannelLinkRegistry itemChannelLinkRegistry;
+
+    @Activate
+    public AnyItemChangeHandler(@Reference ItemChannelLinkRegistry itemChannelLinkRegistry) {
+        this.itemChannelLinkRegistry = itemChannelLinkRegistry;
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(AnyItemChangeHandler.class);
 
@@ -54,7 +65,8 @@ public class AnyItemChangeHandler implements EventSubscriber {
         String itemName = iscEvent.getItemName();
         Object newState = iscEvent.getItemState();
 
-        // Custom action
-        logger.info("Item {} changed to {}", itemName, newState);
+        for (Thing th : itemChannelLinkRegistry.getBoundThings(itemName)) {
+            logger.info("Item {} and linked to {} changed to {}", itemName, th.getLabel(), newState);
+        }
     }
 }
