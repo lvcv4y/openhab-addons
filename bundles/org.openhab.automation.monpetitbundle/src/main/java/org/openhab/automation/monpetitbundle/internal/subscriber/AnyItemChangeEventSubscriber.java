@@ -10,7 +10,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  */
-package org.openhab.automation.monpetitbundle.internal.handler;
+package org.openhab.automation.monpetitbundle.internal.subscriber;
 
 import java.util.Collections;
 import java.util.Set;
@@ -34,16 +34,16 @@ import org.slf4j.LoggerFactory;
  */
 @NonNullByDefault
 @Component(immediate = true, service = EventSubscriber.class)
-public class AnyItemChangeHandler implements EventSubscriber {
+public class AnyItemChangeEventSubscriber implements EventSubscriber {
 
     private final ItemChannelLinkRegistry itemChannelLinkRegistry;
 
     @Activate
-    public AnyItemChangeHandler(@Reference ItemChannelLinkRegistry itemChannelLinkRegistry) {
+    public AnyItemChangeEventSubscriber(@Reference ItemChannelLinkRegistry itemChannelLinkRegistry) {
         this.itemChannelLinkRegistry = itemChannelLinkRegistry;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(AnyItemChangeHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(AnyItemChangeEventSubscriber.class);
 
     @Override
     public Set<String> getSubscribedEventTypes() {
